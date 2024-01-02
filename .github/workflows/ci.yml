@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Cache node_modules
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - run: yarn --no-progress --frozen-lockfile
+      - uses: nrwl/nx-set-shas@v4.0.4
+
+      - run: npx nx format:check
+      - run: npx nx affected -t lint,test,build --parallel=3
