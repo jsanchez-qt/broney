@@ -1,8 +1,13 @@
 {
   "name": "@broney/core",
   "version": "0.0.1",
-  "dependencies": {},
+  "dependencies": {
+    "vitest": "~0.34.6"
+  },
   "type": "commonjs",
   "main": "./index.cjs",
-  "module": "./index.js"
+  "module": "./index.js",
+  "devDependencies": {
+    "vitest": "^1.1.1"
+  }
 }

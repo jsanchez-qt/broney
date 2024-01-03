@@ -1,69 +1,98 @@
-# broney : le bro qui t'aide à gérer ta money
+# Broney: The bro that helps you manage your money
 
-Cet outil est composé de deux applications, une première web développée avec [Remix](https://remix.run) et une deuxième mobile développée avec [Expo](https://expo.dev). Nous avons également package **TypeScript** qui contient la logique métier partagée entre ces 2 applications.
+This tool is made up of two applications, a first web developed with [Remix](https://remix.run) and a second mobile developed with [Expo](https://expo.dev). We have also packaged **TypeScript** that contains the business logic shared between these 2 applications.
 
 ## Stack
 
-- Monorepo avec [Nx](https://nx.dev)
-- App Mobile avec [Expo](https://expo.dev)
-- App Web avec [Remix](https://remix.run)
-- Testing avec [Vitest](https://vitest.dev)
-- Style avec [Tailwind](https://tailwindcss.com) pour le Web et [twrnc](https://github.com/jaredh159/tailwind-react-native-classnames) pour le Mobile
-- Animation avec [Framer Motion](https://www.framer.com/motion/) pour le Web et [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) pour le Mobile
-- Déploiement de l'app Web avec [Netlify](https://www.netlify.com)
-- Base de données, authentification, etc. avec [Supabase](https://supabase.com)
-- Formatage du code avec [Prettier](https://prettier.io)
-- Validation du code avec [ESLint](https://eslint.org)
-- CI/CD avec les [GitHub Actions](https://github.com/features/actions)
-- Gestion d'état avec [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
-- Gestion des formulaires avec [React Hook Form](https://react-hook-form.com)
-- Validation des types avec [Zod](https://zod.dev)
-- Logging avec [Sentry](https://sentry.io/welcome/)
-- Traductions avec [FormatJS](https://formatjs.io)
-- Utilitaire de date avec [date-fns](https://date-fns.org)
+- Monorepo with [Nx](https://nx.dev)
+- Mobile App with [Expo](https://expo.dev)
+- Web App with [Remix](https://remix.run)
+- Testing with [Vitest](https://vitest.dev)
+- Style with [Tailwind](https://tailwindcss.com) for the Web and [twrnc](https://github.com/jaredh159/tailwind-react-native-classnames) for Mobile
+- Animation with [Framer Motion](https://www.framer.com/motion/) for the Web and [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) for Mobile
+- Web app deployment with [Netlify](https://www.netlify.com)
+- Database, authentication, etc. with [Supabase](https://supabase.com)
+- Code formatting with [Prettier](https://prettier.io)
+- Code validation with [ESLint](https://eslint.org)
+- CI/CD with [GitHub Actions](https://github.com/features/actions)
+- State management with [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- Form management with [React Hook Form](https://react-hook-form.com)
+- Type validation with [Zod](https://zod.dev)
+- Logging with [Sentry](https://sentry.io/welcome/)
+- Translations with [FormatJS](https://formatjs.io)
+- Date utility with [date-fns](https://date-fns.org)
 
-## Charte graphique
+## Style Guide
 
-- Font du logo : [Inter Tight](https://fonts.google.com/specimen/Inter+Tight)
-- Couleurs du gradient : #F44336 (rouge) #66BB6A (vert) 45°
+- Logo font: [Inter Tight](https://fonts.google.com/specimen/Inter+Tight)
+- Gradient colors: #F44336 (red) #66BB6A (green) 45°
 
-## Fonctionnalités
+## Features
 
 ### V0 - MVP
 
-- Mettre en place le storage ([react native mmkv](https://github.com/mrousavy/react-native-mmkv) pour le mobile et [localStorage](https://developer.mozilla.org/fr/docs/Web/API/Window/localStorage) pour le web)
-- Gérer les **catégories** (lister, ajouter, modifier et supprimer)
-- Gérer les **comptes** (lister, ajouter, modifier et supprimer)
-- Gérer les **transactions** d'un compte (lister, ajouter, modifier et supprimer)
-- Authentification avec [Supabase](https://supabase.com)
-- Dynamiser toute l'app avec [Supabase](https://supabase.com)
+- Set up storage ([react native mmkv](https://github.com/mrousavy/react-native-mmkv) for mobile and [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) for the web)
+- Manage **categories** (list, add, modify and delete)
+- Manage **accounts** (list, add, modify and delete)
+- Manage a account's **transactions** (list, add, modify, and delete)
+- Authentication with [Supabase](https://supabase.com)
+- Make the entire app dynamic with [Supabase](https://supabase.com)
 
 ### V1
 
-- Gérer les transactions **récurrentes** d'un compte (lister, ajouter, modifier et supprimer)
-- Gérer les transactions de compte à compte (ajouter, modifier, supprimer)
-- Filtrer les transactions (par compte, catégorie et période)
-- Afficher les **prévisions** mensuels (combien il restera sur le compte à la fin du mois après toutes les récurrences et les transactions planifiée avant la fin du mois)
-- Gérer les **patrimoines** (lister, ajouter, modifier, supprimer, partager et lier des comptes)
+- Manage an account's **recurring** transactions (list, add, modify, and delete)
+- Manage account-to-account transactions (add, modify, delete)
+- Filter transactions (by account, category, and period)
+- Display **monthly projections** (how much will be left in the account at the end of the month after all recurrences and transactions planned before the end of the month)
+- Manage **assets** (list, add, modify, delete, share, and link accounts)
 
 ### V2
 
-- Lier son compte avec les APIs de banque
-- Statistiques (à définir)
+- Link the account with the bank APIs
+- Statistics (to be defined)
 - Dark mode
 - Notifications
-- Choix de l'icône de l'app
+- Choose app icon
 - Business plan
-- Noter l'application
+- Rate the application
 - Onboarding
-- Mode hors-ligne
+- Offline mode
 
-## Modèle de données
+## Data Model
 
-- **Wallet**, un portefeuille qui a un solde négatif ou positif (par exemple on peut avoir le portefeuille "Compte Principal Julien" qui a un solde positif de 1000€)
-- **Category**, des catégories servant à préciser le contexte des transactions faites (par exemple on a les catégories "Maison", "Restaurants" et "Divertissements")
-- **Transaction**, les transactions sont liées à un portefeuille et à une catégorie pour savoir où l'argent est transférée (par exemple on a une transaction du portefeuille "Compte Principal Julien" de 50€ sur la catégorie "Restaurants")
+- **Wallet**, a wallet that has a negative or positive balance (for example, you can have "Julien's Main Account Wallet" which has a positive balance of 1000€)
+- **Category**, categories used to specify the context of the transactions made (for example, you have categories "Home", "Restaurants" and "Entertainment")
+- **Transaction**, transactions are linked to a wallet and a category to know where the money is transferred (for example, you have a transaction from the "Julien's Main Account Wallet" of 50€ towards the "Restaurants" category)
 
-## Architecture
+## Project Structure
 
-TODO
+- **apps**
+  - **mobile** : our React Native application developed with Expo
+  - **web** : our React application developed with React
+- **libs**
+  - **ui** : our React and React Native components used by the **web** and **mobile** apps
+  - **tailwind** : our tailwind configuration used by the **web** and **mobile** apps as well as the **ui** lib
+  - **core** : our hexagonal architecture containing the core of our application and all the reusable business logic used by the **web** and **mobile** apps
+
+More details about the **core** lib:
+
+- **libs**
+  - **core**
+    - **src**
+      - **wallet**
+        - **\_\_tests\_\_**
+          - **wallet.service.test.ts** : the tested business logic
+        - **domain**
+          - **wallet.ts** : the entity representing the wallets
+          - **wallet.repository.ts**: the contract determining how to manipulate the entity to list, add, etc.
+          - **wallet.service.ts** : the service consuming an implementation of the contract
+        - **infrastructure**
+          - **in-memory-wallet.repository.ts** : an implementation of the contract
+          - **local-storage-wallet.repository.ts** : ditto
+          - **mmkv-wallet.repository.ts** : ditto
+          - **supabase-wallet.repository.ts** : ditto
+        - **user-interface**
+          - **wallet.store.ts** : a vanilla zustand store, usable in any JavaScript environment and will be used in our apps
+        - **category**
+          - ...
+        - ...
