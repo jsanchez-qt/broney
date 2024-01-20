@@ -1,68 +1,86 @@
 import { WalletService } from '../domain/wallet.service'
 import { InMemoryWalletRepository } from '../infrastructure/in-memory-wallet.repository'
+import { LocalStorageWalletRepository } from '../infrastructure/local-storage-wallet.repository'
 import { describe, beforeEach, test, expect } from 'vitest'
+import { LocalStorageRepositoryMock } from '../../local-storage/__mocks__/local-storage.mock'
+import { WalletRepository } from '../domain/wallet.repository'
 
 describe('Wallet Service', () => {
-  let service: WalletService
+  describe.each([['in-memory'], ['local-storage']])('test the with a %s repository instance ', (repositoryType) => {
+    let service: WalletService
 
-  beforeEach(() => {
-    const repository = new InMemoryWalletRepository()
-    service = new WalletService(repository)
-  })
+    beforeEach(() => {
+      let repository: WalletRepository
 
-  test('getAll', async () => {
-    const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
+      switch (repositoryType) {
+        case 'local-storage': {
+          const localStorageMocked = new LocalStorageRepositoryMock()
+          repository = new LocalStorageWalletRepository(localStorageMocked)
+          break
+        }
+        case 'in-memory':
+        default:
+          repository = new InMemoryWalletRepository()
+          break
+      }
 
-    await service.create(newWallet)
-    const retrievedWallets = await service.getAll()
+      service = new WalletService(repository)
+    })
 
-    expect(retrievedWallets).toEqual([newWallet])
-  })
+    test('getAll > should retrieve all wallets', async () => {
+      const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
 
-  test('get', async () => {
-    const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
+      await service.create(newWallet)
+      const retrievedWallets = await service.getAll()
 
-    await service.create(newWallet)
-    const retrievedWallet = await service.get(newWallet.id)
+      expect(retrievedWallets).toEqual([newWallet])
+    })
 
-    expect(retrievedWallet).toEqual(newWallet)
-  })
+    test('get > should retrieve a wallet according to an id', async () => {
+      const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
 
-  test('create', async () => {
-    const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
+      await service.create(newWallet)
+      const retrievedWallet = await service.get(newWallet.id)
 
-    const createdWallet = await service.create(newWallet)
-    const retrievedWallets = await service.getAll()
-    const retrievedWallet = await service.get(createdWallet.id)
+      expect(retrievedWallet).toEqual(newWallet)
+    })
 
-    expect(createdWallet).toEqual(newWallet)
-    expect(retrievedWallets).toEqual([newWallet])
-    expect(retrievedWallet).toEqual(newWallet)
-  })
+    test('create > should create a wallet', async () => {
+      const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
 
-  test('update', async () => {
-    const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
-    const updatedWallet = { id: '1', name: 'Wallet 1', balance: 100 }
+      const createdWallet = await service.create(newWallet)
+      const retrievedWallets = await service.getAll()
+      const retrievedWallet = await service.get(createdWallet.id)
 
-    await service.create(newWallet)
-    const retrievedWallet = await service.get(newWallet.id)
-    const modifiedWallet = await service.update(updatedWallet)
-    const retrievedModifiedWallet = await service.get(modifiedWallet.id)
+      expect(createdWallet).toEqual(newWallet)
+      expect(retrievedWallets).toEqual([newWallet])
+      expect(retrievedWallet).toEqual(newWallet)
+    })
 
-    expect(retrievedWallet).toEqual(newWallet)
-    expect(modifiedWallet).toEqual(updatedWallet)
-    expect(retrievedModifiedWallet).toEqual(updatedWallet)
-  })
+    test('update > should update the specified wallet', async () => {
+      const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
+      const updatedWallet = { id: '1', name: 'Wallet 1', balance: 100 }
 
-  test('delete', async () => {
-    const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
+      await service.create(newWallet)
+      const retrievedWallet = await service.get(newWallet.id)
+      const modifiedWallet = await service.update(updatedWallet)
+      const retrievedModifiedWallet = await service.get(modifiedWallet.id)
 
-    await service.create(newWallet)
-    const retrievedWallet = await service.get(newWallet.id)
-    await service.delete(newWallet.id)
-    const retrievedWallets = await service.getAll()
+      expect(retrievedWallet).toEqual(newWallet)
+      expect(modifiedWallet).toEqual(updatedWallet)
+      expect(retrievedModifiedWallet).toEqual(updatedWallet)
+    })
 
-    expect(retrievedWallet).toEqual(newWallet)
-    expect(retrievedWallets).toEqual([])
+    test('delete > should delete a wallet', async () => {
+      const newWallet = { id: '1', name: 'Wallet 1', balance: 0 }
+
+      await service.create(newWallet)
+      const retrievedWallet = await service.get(newWallet.id)
+      await service.delete(newWallet.id)
+      const retrievedWallets = await service.getAll()
+
+      expect(retrievedWallet).toEqual(newWallet)
+      expect(retrievedWallets).toEqual([])
+    })
   })
 })

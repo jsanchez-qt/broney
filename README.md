@@ -82,15 +82,16 @@ More details about the **core** lib:
       - **wallet**
         - **\_\_tests\_\_**
           - **wallet.service.test.ts** : the tested business logic
+          - **wallet.test.ts** : the tested business rules
         - **domain**
-          - **wallet.ts** : the entity representing the wallets
+          - **wallet.ts** : the entity representing the wallets and contain the business rules
           - **wallet.repository.ts**: the contract determining how to manipulate the entity to list, add, etc.
           - **wallet.service.ts** : the service consuming an implementation of the contract
         - **infrastructure**
           - **in-memory-wallet.repository.ts** : an implementation of the contract
-          - **local-storage-wallet.repository.ts** : ditto
-          - **mmkv-wallet.repository.ts** : ditto
-          - **supabase-wallet.repository.ts** : ditto
+          - **local-storage-wallet.repository.ts** : same
+          - **mmkv-wallet.repository.ts** : same
+          - **supabase-wallet.repository.ts** : same
         - **user-interface**
           - **wallet.store.ts** : a vanilla zustand store, usable in any JavaScript environment and will be used in our apps
         - **category**
