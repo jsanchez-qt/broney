@@ -2,7 +2,8 @@
   "name": "@broney/core",
   "version": "0.0.1",
   "dependencies": {
-    "vitest": "~0.34.6"
+    "vitest": "~0.34.6",
+    "zustand": "^4.5.1"
   },
   "type": "commonjs",
   "main": "./index.cjs",

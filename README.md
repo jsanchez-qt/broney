@@ -90,7 +90,6 @@ More details about the **core** lib:
         - **infrastructure**
           - **in-memory-wallet.repository.ts** : an implementation of the contract
           - **local-storage-wallet.repository.ts** : same
-          - **mmkv-wallet.repository.ts** : same
           - **supabase-wallet.repository.ts** : same
         - **user-interface**
           - **wallet.store.ts** : a vanilla zustand store, usable in any JavaScript environment and will be used in our apps
